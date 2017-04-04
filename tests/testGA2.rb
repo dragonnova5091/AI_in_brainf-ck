@@ -1,5 +1,11 @@
-POPULATION_SIZE = 200
-MUTATION_RATE = 0.05
+
+#this program searches for a set of 10 numbers and tries to get them to total to 100 using a GA
+
+
+
+TARGET_VALUE = 116
+POPULATION_SIZE = 80
+MUTATION_RATE = 0.02
 #CROSSOVER_RATE = 0.8
 
 class Chromosome
@@ -9,11 +15,12 @@ class Chromosome
 		@population = []
 		POPULATION_SIZE.times do  
 			temp = []
-			rand(8..10).times do
+			rand(8..12).times do
 				temp << rand(1..10)
 			end
 			@population << temp
 		end
+		#puts @population.length 
 	end
 	
 	def fitness 
@@ -51,7 +58,6 @@ class Chromosome
 			a += 1
 		end
 		
-		@mostfit = @mostfit.sort
 		#print @mostfit
 	end
 	
@@ -66,7 +72,14 @@ class Chromosome
 		20.times do 
 			crossover(@mostfit[2], @mostfit[3])
 		end
+		20.times do 
+			crossover(@mostfit[1], @mostfit[2])
+		end
+		20.times do 
+			crossover(@mostfit[0], @mostfit[3])
+		end
 		@new_population = @population
+		#puts @population.length 
 	end
 	
 	def crossover(parent1, parent2)
@@ -75,7 +88,7 @@ class Chromosome
 		else 
 			templength = parent2.length
 		end
-		while rand < MUTATION_RATE
+		if rand < MUTATION_RATE
 			parent1 = mutate(parent1)
 		end
 		if rand < MUTATION_RATE
@@ -126,12 +139,12 @@ class Chromosome
 		
 		#print "\n"
 		
-		@new_population << offspring1.shuffle
+		@new_population.push(offspring1.shuffle)
 		@new_population << offspring2.shuffle
 	end
 	
 	def mutate(chromosome)
-		typeofmutation = rand(1..3)
+		typeofmutation = rand(1..4)
 		case typeofmutation
 			when 1 #change number
 				num = rand(0..chromosome.length - 1)
@@ -147,6 +160,16 @@ class Chromosome
 				num = rand(0..chromosome.length - 1)
 				num2 = rand(-1..1)
 				chromosome[num2] = chromosome[num]
+			when 4 #increase
+				num = rand(0..chromosome.length - 1)
+				if chromosome[num] < 10
+					chromosome[num] += 1
+				end
+			when 5 #decrease 
+				num = rand(0..chromosome.length - 1)
+				if chromosome[num] > 1
+					chromosome[num] -= 1
+				end
 		end
 		
 		return chromosome
@@ -154,13 +177,13 @@ class Chromosome
 end
 
 testchromosome = Chromosome.new
-while testchromosome.best_fitness[(testchromosome.best_fitness.length)-1] < 97
+while testchromosome.best_fitness[(testchromosome.best_fitness.length)-1] < TARGET_VALUE
 testchromosome.fitness
 testchromosome.next_parents 
 testchromosome.make_new_population
 end
 print "\n"
-print testchromosome.mostfit[3]
+print testchromosome.mostfit
 print "\n"
 print testchromosome.best_fitness
 #puts rand
