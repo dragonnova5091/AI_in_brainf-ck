@@ -1,12 +1,17 @@
 
-#this program searches for a set of 10 numbers and tries to get them to total to 100 using a GA
+#this program searches for a set of numbers and tries to get them to total to TARGET_VALUE using a Genetic algorithm
 
+#these are the changeable values to use.
 
-
+#the closer the TARGET_VALUE is to 10 * MAXIMUM_CHROMOSOME_SIZE, the slower the program runs
+#MUTATION_RATE changes speed up or slow down the program, I havent found the perfect rate.
+#POPULATION_SIZE also speeds up and slows it down, still working on it.
 TARGET_VALUE = 116
 POPULATION_SIZE = 80
 MUTATION_RATE = 0.02
-#CROSSOVER_RATE = 0.8
+MINIMUM_CHROMOSOME_SIZE = 8
+MAXIMUM_CHROMOSOME_SIZE = 12
+
 
 class Chromosome
 	attr_reader :best_fitness, :mostfit
@@ -15,7 +20,7 @@ class Chromosome
 		@population = []
 		POPULATION_SIZE.times do  
 			temp = []
-			rand(8..12).times do
+			rand(MINIMUM_CHROMOSOME_SIZE..MAXIMUM_CHROMOSOME_SIZE).times do
 				temp << rand(1..10)
 			end
 			@population << temp
@@ -66,16 +71,16 @@ class Chromosome
 		
 		#crossover(@mostfit[0], @mostfit[1])
 		
-		20.times do 
+		(POPULATION_SIZE/4).times do 
 			crossover(@mostfit[0], @mostfit[1])
 		end
-		20.times do 
+		(POPULATION_SIZE/4).times do 
 			crossover(@mostfit[2], @mostfit[3])
 		end
-		20.times do 
+		(POPULATION_SIZE/4).times do 
 			crossover(@mostfit[1], @mostfit[2])
 		end
-		20.times do 
+		(POPULATION_SIZE/4).times do 
 			crossover(@mostfit[0], @mostfit[3])
 		end
 		@new_population = @population
