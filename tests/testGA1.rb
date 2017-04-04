@@ -1,4 +1,4 @@
-require_relative "../compilier/compilier.rb"
+require_relative "../compilier/compilier1.rb"
 
 
 $bfchars = "+++---.,><[]".split("")
@@ -30,8 +30,6 @@ class Chromosome
 	
 end
 
-Brainfuck.evaluate("++++++++++[>+++++++<-]>.--.+.-----.+++++++++++.")
-
 
 testCromosome = Chromosome.new(50)
 test = false
@@ -47,5 +45,5 @@ rescue
 	tests += 1
 end
 end
-puts testCromosome.chromosome
+#puts testCromosome.chromosome
 
