@@ -83,7 +83,7 @@ class Chromosome
 		(POPULATION_SIZE/4).times do 
 			crossover(@mostfit[0], @mostfit[3])
 		end
-		@new_population = @population
+		@population = @new_population
 		#puts @population.length 
 	end
 	
@@ -149,7 +149,7 @@ class Chromosome
 	end
 	
 	def mutate(chromosome)
-		typeofmutation = rand(1..4)
+		typeofmutation = rand(1..5)
 		case typeofmutation
 			when 1 #change number
 				num = rand(0..chromosome.length - 1)
