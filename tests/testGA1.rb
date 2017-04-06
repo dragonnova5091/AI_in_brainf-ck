@@ -1,5 +1,10 @@
 require_relative "../compilier/compilier1.rb"
 
+#  !!!
+#this one doesn't work
+#  !!!
+
+
 
 $bfchars = "+++---.,><[]".split("")
 
