@@ -6,16 +6,17 @@
 #the closer the TARGET_VALUE is to 10 * MAXIMUM_CHROMOSOME_SIZE, the slower the program runs
 #MUTATION_RATE changes speed up or slow down the program, I havent found the perfect rate.
 #POPULATION_SIZE also speeds up and slows it down, still working on it.
-TARGET_VALUE = 116
-POPULATION_SIZE = 80
+TARGET_VALUE = 500
+POPULATION_SIZE = 1000
 MUTATION_RATE = 0.02
 MINIMUM_CHROMOSOME_SIZE = 8
-MAXIMUM_CHROMOSOME_SIZE = 12
+MAXIMUM_CHROMOSOME_SIZE = 15
 
 
 class Chromosome
-	attr_reader :best_fitness, :mostfit
+	attr_reader :best_fitness, :mostfit, :generation
 	def initialize
+		@generation = 1 
 		@best_fitness = [0,1]
 		@population = []
 		POPULATION_SIZE.times do  
@@ -84,6 +85,7 @@ class Chromosome
 			crossover(@mostfit[0], @mostfit[3])
 		end
 		@population = @new_population
+		@generation += 1
 		#puts @population.length 
 	end
 	
@@ -167,9 +169,9 @@ class Chromosome
 				chromosome[num2] = chromosome[num]
 			when 4 #increase
 				num = rand(0..chromosome.length - 1)
-				if chromosome[num] < 10
+				#if chromosome[num] < 10
 					chromosome[num] += 1
-				end
+				#end
 			when 5 #decrease 
 				num = rand(0..chromosome.length - 1)
 				if chromosome[num] > 1
@@ -187,10 +189,11 @@ testchromosome.fitness
 testchromosome.next_parents 
 testchromosome.make_new_population
 end
-print "\n"
-print testchromosome.mostfit
-print "\n"
+#print "\n"
+#print testchromosome.mostfit
+#print "\n"
 print testchromosome.best_fitness
+puts "\n#{testchromosome.generation}"
 #puts rand
 #sleep 5
 
